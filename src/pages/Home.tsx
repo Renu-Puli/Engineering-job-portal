@@ -33,19 +33,24 @@ const jobs: Job[] = Array.from({ length: 30 }, (_, i) => ({
 }));
 
 export default function Home() {
-  const [search, setSearch] = useState("");
-  const [selectedRole, setSelectedRole] = useState("All");
-  
-  const [_savedJobs, setSavedJobs] = useState([]);
-  const [_appliedJobs, setAppliedJobs] = useState([]);
-  
-  const [popup, setPopup] = useState("");
+  const [search, setSearch] = useState<string>("");
+  const [selectedRole, setSelectedRole] = useState<string>("All");
 
-  // ✅ Get user safely INSIDE component
-  const currentUser = JSON.parse(localStorage.getItem("currentUser") || "{}");
+  // ✅ FIX: Explicitly define type as Job[]
+  const [_savedJobs, setSavedJobs] = useState<Job[]>([]);
+  const [_appliedJobs, setAppliedJobs] = useState<Job[]>([]);
+
+  const [popup, setPopup] = useState<string>("");
+
+  // Safe access to localStorage (important for production build)
+  const currentUser =
+    typeof window !== "undefined"
+      ? JSON.parse(localStorage.getItem("currentUser") || "{}")
+      : {};
+
   const userKey: string = currentUser?.email || "";
 
-  // ✅ Load user specific data
+  // Load user-specific data
   useEffect(() => {
     if (!userKey) return;
 
