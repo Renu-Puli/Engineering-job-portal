@@ -35,8 +35,10 @@ const jobs: Job[] = Array.from({ length: 30 }, (_, i) => ({
 export default function Home() {
   const [search, setSearch] = useState("");
   const [selectedRole, setSelectedRole] = useState("All");
-  const [savedJobs, setSavedJobs] = useState<Job[]>([]);
-  const [appliedJobs, setAppliedJobs] = useState<Job[]>([]);
+  
+  const [_savedJobs, setSavedJobs] = useState([]);
+  const [_appliedJobs, setAppliedJobs] = useState([]);
+  
   const [popup, setPopup] = useState("");
 
   // ✅ Get user safely INSIDE component
