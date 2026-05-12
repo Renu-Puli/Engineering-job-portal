@@ -302,17 +302,7 @@ export default function Home() {
       ? JSON.parse(localStorage.getItem("currentUser") || "{}")
       : {};
 
-<<<<<<< HEAD
 
-  const currentUser = JSON.parse(localStorage.getItem("currentUser") || "{}");
-  const userKey: string = currentUser?.email || "";
-
-
-=======
-  const userKey: string = currentUser?.email || "";
-
-  // Load user-specific data
->>>>>>> 1bcb5b2478b5147806fe66e52a65389b58abfb26
   useEffect(() => {
     if (!userKey) return;
 
