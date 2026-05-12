@@ -290,17 +290,13 @@ export default function Home() {
   const [search, setSearch] = useState<string>("");
   const [selectedRole, setSelectedRole] = useState<string>("All");
 
-  // ✅ FIX: Explicitly define type as Job[]
-  const [_savedJobs, setSavedJobs] = useState<Job[]>([]);
-  const [_appliedJobs, setAppliedJobs] = useState<Job[]>([]);
+  const [savedJobs, setSavedJobs] = useState<Job[]>([]);
+  const [appliedJobs, setAppliedJobs] = useState<Job[]>([]);
 
   const [popup, setPopup] = useState<string>("");
 
-  // Safe access to localStorage (important for production build)
-  const currentUser =
-    typeof window !== "undefined"
-      ? JSON.parse(localStorage.getItem("currentUser") || "{}")
-      : {};
+  const currentUser = JSON.parse(localStorage.getItem("currentUser") || "{}");
+  const userKey: string = currentUser?.email || "";
 
 
   useEffect(() => {
