@@ -9,17 +9,31 @@ export default function Navbar() {
     navigate("/login");
   };
 
+  const handleResetData = () => {
+    if (window.confirm("Are you sure you want to clear all your saved/applied jobs?")) {
+      const currentUser = JSON.parse(localStorage.getItem("currentUser") || "{}");
+      if (currentUser.email) {
+        localStorage.removeItem(`savedJobs_${currentUser.email}`);
+        localStorage.removeItem(`appliedJobs_${currentUser.email}`);
+        window.location.reload();
+      }
+    }
+  };
+
   return (
     <nav className="navbar">
       <h1>🚀 EngiJobs</h1>
 
-      <div>
+      <div className="nav-links">
         {user ? (
           <>
             <Link to="/">Home</Link>
             <Link to="/saved">Saved</Link>
             <Link to="/applied">Applied</Link>
-            <button onClick={handleLogout} className="logout-btn">
+            <button onClick={handleResetData} className="reset-btn" style={{ marginLeft: '10px' }}>
+              Reset Data
+            </button>
+            <button onClick={handleLogout} className="logout-btn" style={{ marginLeft: '10px' }}>
               Logout
             </button>
           </>

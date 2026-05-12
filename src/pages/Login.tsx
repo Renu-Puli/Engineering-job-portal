@@ -7,46 +7,35 @@ export default function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  const handleLogin = (e: any) => {
-    e.preventDefault();
-
+  const handleLogin = () => {
     const users = JSON.parse(localStorage.getItem("users") || "[]");
 
-    const validUser = users.find(
-      (user: any) => user.email === email && user.password === password
+    const user = users.find(
+      (u: any) => u.email === email && u.password === password
     );
 
-    if (!validUser) {
-      alert("Invalid credentials!");
+    if (!user) {
+      alert("Invalid Credentials. Please Register.");
+      navigate("/register");
       return;
     }
 
-    localStorage.setItem("currentUser", JSON.stringify(validUser));
-
+    localStorage.setItem("currentUser", JSON.stringify(user));
     navigate("/");
   };
 
   return (
     <div className="auth-container">
-      <form onSubmit={handleLogin} className="auth-box">
+      <div className="auth-box">
         <h2>Login</h2>
 
-        <input
-          type="email"
-          placeholder="Email"
-          onChange={(e) => setEmail(e.target.value)}
-          required
-        />
+        <input placeholder="Email"
+          onChange={(e) => setEmail(e.target.value)} />
+        <input type="password" placeholder="Password"
+          onChange={(e) => setPassword(e.target.value)} />
 
-        <input
-          type="password"
-          placeholder="Password"
-          onChange={(e) => setPassword(e.target.value)}
-          required
-        />
-
-        <button type="submit">Login</button>
-      </form>
+        <button onClick={handleLogin}>Login</button>
+      </div>
     </div>
   );
 }

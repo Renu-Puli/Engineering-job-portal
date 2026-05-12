@@ -1,21 +1,23 @@
-import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Navbar from "./components/Navbar";
+import PrivateRoute from "./components/PrivateRoute";
+
 import Home from "./pages/Home";
 import SavedJobs from "./pages/SavedJobs";
 import AppliedJobs from "./pages/AppliedJobs";
+import InterviewQuestions from "./pages/InterviewQuestions";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
-
-function PrivateRoute({ children }: { children: React.ReactNode }) {
-  const user = localStorage.getItem("currentUser");
-  return user ? <>{children}</> : <Navigate to="/login" />;
-}
 
 export default function App() {
   return (
     <Router>
       <Navbar />
+
       <Routes>
+        <Route path="/login" element={<Login />} />
+        <Route path="/register" element={<Register />} />
+
         <Route
           path="/"
           element={
@@ -24,6 +26,7 @@ export default function App() {
             </PrivateRoute>
           }
         />
+
         <Route
           path="/saved"
           element={
@@ -32,6 +35,7 @@ export default function App() {
             </PrivateRoute>
           }
         />
+
         <Route
           path="/applied"
           element={
@@ -40,8 +44,14 @@ export default function App() {
             </PrivateRoute>
           }
         />
-        <Route path="/login" element={<Login />} />
-        <Route path="/register" element={<Register />} />
+        <Route
+          path="/prep/:role"
+          element={
+            <PrivateRoute>
+              <InterviewQuestions />
+            </PrivateRoute>
+          }
+        />
       </Routes>
     </Router>
   );

@@ -4,66 +4,51 @@ import { useNavigate } from "react-router-dom";
 export default function Register() {
   const navigate = useNavigate();
 
+  const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
 
-  const handleRegister = (e: any) => {
-    e.preventDefault();
+  const handleRegister = () => {
+    if (!name || !email || !password || !confirmPassword) {
+      alert("All fields required");
+      return;
+    }
 
     if (password !== confirmPassword) {
-      alert("Passwords do not match!");
+      alert("Passwords do not match");
       return;
     }
 
-    const existingUsers = JSON.parse(localStorage.getItem("users") || "[]");
+    const users = JSON.parse(localStorage.getItem("users") || "[]");
 
-    const userExists = existingUsers.find(
-      (user: any) => user.email === email
-    );
-
-    if (userExists) {
-      alert("User already exists!");
+    if (users.some((u: any) => u.email === email)) {
+      alert("User already exists. Please login.");
+      navigate("/login");
       return;
     }
 
-    const newUser = { email, password };
+    const newUser = { name, email, password };
 
-    const updatedUsers = [...existingUsers, newUser];
-    localStorage.setItem("users", JSON.stringify(updatedUsers));
-
+    localStorage.setItem("users", JSON.stringify([...users, newUser]));
     alert("Registered Successfully!");
     navigate("/login");
   };
 
   return (
     <div className="auth-container">
-      <form onSubmit={handleRegister} className="auth-box">
+      <div className="auth-box">
         <h2>Register</h2>
 
-        <input
-          type="email"
-          placeholder="Email"
-          onChange={(e) => setEmail(e.target.value)}
-          required
-        />
+        <input placeholder="Name" onChange={(e) => setName(e.target.value)} />
+        <input placeholder="Email" onChange={(e) => setEmail(e.target.value)} />
+        <input type="password" placeholder="Password"
+          onChange={(e) => setPassword(e.target.value)} />
+        <input type="password" placeholder="Confirm Password"
+          onChange={(e) => setConfirmPassword(e.target.value)} />
 
-        <input
-          type="password"
-          placeholder="Password"
-          onChange={(e) => setPassword(e.target.value)}
-          required
-        />
-
-        <input
-          type="password"
-          placeholder="Confirm Password"
-          onChange={(e) => setConfirmPassword(e.target.value)}
-          required
-        />
-
-        <button type="submit">Register</button>
-      </form>
+        <button onClick={handleRegister}>Register</button>
+      </div>
     </div>
   );
 }
