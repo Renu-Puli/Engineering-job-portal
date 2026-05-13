@@ -22,15 +22,8 @@ const roles = [
   "Full Stack",
   "Cyber Security",
 ];
-const _roleSkills: Record<string, string[]> = {
-  Frontend: ["React", "TypeScript", "Tailwind", "Next.js", "Redux"],
-  Backend: ["Node.js", "Express", "MongoDB", "PostgreSQL", "Redis"],
-  AI: ["Python", "PyTorch", "TensorFlow", "Scikit-Learn", "NLP"],
-  DevOps: ["Docker", "Kubernetes", "AWS", "CI/CD", "Terraform"],
-  "Data Science": ["Python", "R", "Pandas", "SQL", "Tableau"],
-  "Full Stack": ["React", "Node.js", "Express", "MongoDB", "TypeScript"],
-  "Cyber Security": ["Ethical Hacking", "Network Security", "SIEM", "Cryptography"],
-};
+
+
 
 const jobs: Job[] = [
   {
