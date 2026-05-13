@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
 export default function Register() {
@@ -9,7 +9,14 @@ export default function Register() {
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
 
+  useEffect(() => {
+    if (localStorage.getItem("currentUser")) {
+      navigate("/");
+    }
+  }, [navigate]);
+
   const handleRegister = () => {
+
     if (!name || !email || !password || !confirmPassword) {
       alert("All fields required");
       return;
@@ -40,12 +47,13 @@ export default function Register() {
       <div className="auth-box">
         <h2>Register</h2>
 
-        <input placeholder="Name" onChange={(e) => setName(e.target.value)} />
-        <input placeholder="Email" onChange={(e) => setEmail(e.target.value)} />
-        <input type="password" placeholder="Password"
+        <input placeholder="Name" autoComplete="off" onChange={(e) => setName(e.target.value)} />
+        <input placeholder="Email" autoComplete="off" onChange={(e) => setEmail(e.target.value)} />
+        <input type="password" placeholder="Password" autoComplete="new-password"
           onChange={(e) => setPassword(e.target.value)} />
-        <input type="password" placeholder="Confirm Password"
+        <input type="password" placeholder="Confirm Password" autoComplete="new-password"
           onChange={(e) => setConfirmPassword(e.target.value)} />
+
 
         <button onClick={handleRegister}>Register</button>
       </div>

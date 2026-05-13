@@ -1,13 +1,22 @@
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useLocation } from "react-router-dom";
+import { useEffect, useState } from "react";
 
 export default function Navbar() {
   const navigate = useNavigate();
-  const user = localStorage.getItem("currentUser");
+  const location = useLocation();
+  const [user, setUser] = useState<string | null>(localStorage.getItem("currentUser"));
+
+  useEffect(() => {
+    setUser(localStorage.getItem("currentUser"));
+  }, [location.pathname]);
+
 
   const handleLogout = () => {
     localStorage.removeItem("currentUser");
+    setUser(null);
     navigate("/login");
   };
+
 
   const handleResetData = () => {
     if (window.confirm("Are you sure you want to clear all your saved/applied jobs?")) {
