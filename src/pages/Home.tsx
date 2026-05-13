@@ -22,8 +22,7 @@ const roles = [
   "Full Stack",
   "Cyber Security",
 ];
-
-const roleSkills: Record<string, string[]> = {
+const _roleSkills: Record<string, string[]> = {
   Frontend: ["React", "TypeScript", "Tailwind", "Next.js", "Redux"],
   Backend: ["Node.js", "Express", "MongoDB", "PostgreSQL", "Redis"],
   AI: ["Python", "PyTorch", "TensorFlow", "Scikit-Learn", "NLP"],
